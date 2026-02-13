@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>疫情数据可视化</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'css/index.css' %}"rel="stylesheet" >
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/home_style.css' %}" rel="stylesheet">
+  <style>
+
+        .container1{
+            width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+            grid-gap: 15px;
+            margin: 0 auto;
+        }
+        .container1 .card{
+            position: relative;
+            width: 200px;
+            height: 266px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.5);
+
+
+        }
+        .container1 .card:hover .face.face2{
+            height: 60px;;
+
+        }
+
+        .container1 .card .face{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container1 .card .face.face1{
+            box-sizing: border-box;
+            padding: 20px;
+        }
+        .container1 .card .face.face1 h2{
+            margin: 0;
+            padding: 0;
+        }
+
+        .container1 .card .face.face2{
+            background: #111;
+            transition: 0.5s;
+        }
+        .container1 .card .face.face2::before{
+            position: absolute;
+            left: 0;
+            top: 0;
+            content: '';
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 254, 0.1);
+        }
+        .container1 .card:nth-child(1) .face.face2{
+            background: linear-gradient(45deg,#3503ad,#f7308c);
+        }
+        .container1 .card:nth-child(2) .face.face2{
+            background: linear-gradient(45deg,#ccff00,#09afff);
+        }
+        .container1 .card:nth-child(3) .face.face2{
+            background: linear-gradient(45deg,#e91e63,#ffeb3b);
+        }
+        .container1 .card:nth-child(4) .face.face2{
+            background: linear-gradient(45deg, #23adab, #8153f7);
+        }
+        .container1 .card .face.face2 h2{
+            margin: 0;
+            padding: 0;
+            font-size: 10em;
+            color: #fff;
+            transition: .5s;
+            text-shadow: 2px 2px 6px #ccc;
+
+        }
+        .container1 .card:hover .face.face2 h2{
+            font-size: 2em;
+        }
+    </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+      <div class="logo float-left">
+          <h1 class="text-light"><a href="https://baike.baidu.com/item/%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92%E8%82%BA%E7%82%8E/24282529"><h1><font face="宋体">COVID-19</font></h1></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li><a href="/">首页</a></li>
+          <li><a href="{% url 'patient' %}">新冠患者的前置条件</a></li>
+          <li><a href="{% url 'sym' %}">新冠患者特征</a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+    </div>
+  </header><!-- End Header -->
+  <!-- ======= 首页 ======= -->
+  <section id="team" class="header">
+      <div class="container">
+        <div class="section-title">
+          <h2>基于PCA的新冠疫情病例数据可视化分析</h2>
+        </div>
+      <div id="contbox">
+        <ul id="img_list" class="ani">
+            <li style="opacity: 1;z-index:1">
+                <a href="#"><img src="{% static 'images/1.jpg' %}"></a>
+            </li>
+            <li><a href="#"><img src="{% static 'images/2.jpg' %}"></a></li>
+            <li><a href="#"><img src="{% static 'images/3.jpg' %}"></a></li>
+            <li><a href="#"><img src="{% static 'images/4.jpg' %}"></a></li>
+            <li><a href="#"><img src="{% static 'images/5.jpg' %}"></a></li>
+            <li><a href="#"><img src="{% static 'images/6.jpg' %}"></a></li>
+        </ul>
+        <div id="two_rrow">
+            <a class="arrow left_arrow" href="#"><span></span></a>
+            <a class="arrow right_arrow" href="#"><span></span></a>
+        </div>
+        <div id="dot_list">
+            <a href="#"><span class="dot cur"></span></a>
+            <a href="#"><span class="dot"></span></a>
+            <a href="#"><span class="dot"></span></a>
+            <a href="#"><span class="dot"></span></a>
+            <a href="#"><span class="dot"></span></a>
+        </div>
+        </div>
+        <script src="{% static 'js/index.js' %}"></script>
+
+      </div>
+       <div class="container1">
+        <div class="card">
+            <div class="face face1">
+                <div class="content">
+                    <a href="{% url 'movie' %}">
+                    <h2>疫情可视化动画展示</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="face face2">
+                <h2>01</h2>
+            </div>
+        </div>
+        <div class="card">
+            <div class="face face1">
+                <div class="content">
+                    <a href="{% url 'map' %}"><h2>中国新冠疫情实时数据地图</h2></a>
+                </div>
+            </div>
+            <div class="face face2">
+                <h2>02</h2>
+            </div>
+        </div>
+        <div class="card">
+            <div class="face face1">
+                <div class="content">
+                    <a href="{% url 'pie' %}"><h2>今日发生疫情省份统计</h2></a>
+                </div>
+            </div>
+            <div class="face face2">
+                <h2>03</h2>
+            </div>
+        </div>
+       <div class="card">
+        <div class="face face1">
+            <div class="content">
+                <a href="{% url 'rank' %}"><h2>各省累计确诊排名</h2></a>
+            </div>
+        </div>
+        <div class="face face2">
+            <h2>04</h2>
+        </div>
+    </div>
+    </div>
+    </section><!-- 结束 首页 -->
+
+
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+   <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+   <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+   <script src="{% static 'vendor/jquery-sticky/jquery.sticky.js' %}"></script>
+   <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+   <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+   <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+   <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+   <script src="{% static 'vendor/aos/aos.js' %}"></script>
+   <script src="{% static 'js/canvas-nest.js' %}"></script>
+  <!-- Template Main JS File -->
+  <script src="{% static 'js/home_main.js' %}"></script>
+
+</body>
+
+</html>

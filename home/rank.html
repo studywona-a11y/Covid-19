@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>各省累计确诊排名</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- 引入 ECharts 文件 -->
+  <script src="{% static 'js/echarts.min.js' %}"></script>
+  <script src="{% static 'js/china.js' %}"></script>
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/home_style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+ <script>  window.province_name={{ province_name|safe }}
+            window.province_confirm={{ province_confirm|safe }}
+
+ </script>
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+<h1 class="text-light"><a href="https://baike.baidu.com/item/%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92%E8%82%BA%E7%82%8E/24282529"><h1><font face="宋体">COVID-19</font></h1></a></h1>        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li><a href="/">首页</a></li>
+          <li><a href="{% url 'patient' %}">新冠患者的前置条件</a></li>
+          <li><a href="{% url 'sym' %}">新冠患者特征</a></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+    <!-- ======= 评分图展示 ======= -->
+    <section id="team" class="team">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>各省累计新冠病例数</h2>
+
+        </div>
+
+          <!-- ======= 预览板块 ======= -->
+        <section class="counts section-bg">
+            <div class="container">
+          <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+          <div id="dom1" style="width: 98%;height:400px;"></div>
+            </div>
+        </section><!-- End Counts Section -->
+      </div>
+    </section><!-- 结束 首页 -->
+
+
+
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+   <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+   <script src="{% static 'vendor/jquery-sticky/jquery.sticky.js' %}"></script>
+   <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+   <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+   <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+   <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+   <script src="{% static 'vendor/aos/aos.js' %}"></script>
+   <script src="{% static 'js/canvas-nest.js' %}"></script>
+  <!-- Template Main JS File -->
+
+    <script src="{% static 'js/home_main.js' %}"></script>
+
+    <script type="text/javascript">
+        var today = new Date(); //系统当前时间
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('dom1'));
+
+        var myColor = [
+            "#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6",
+            "#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6",
+            "#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6",
+            "#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6",
+            "#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6",
+            "#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6",
+            "#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6",
+        ];
+        //2.配置echart组件
+        option = {
+            title: {
+                {#subtext:'',#}
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            grid: {
+                top: "10%",
+                left: '3%',
+                right: '6%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                boundaryGap: [0, 0.01],
+                axisLabel: {
+                    color: "#000",
+                    fontSize: '9'
+                },
+            },
+            yAxis: {
+                type: 'category',
+                inverse: true,
+                data: province_name,
+                axisLabel: {
+                    color: "#000",
+                },
+            },
+            series: [
+                {
+                    name: '累计确诊',
+                    type: 'bar',
+                    // 柱子设为圆角
+                    itemStyle: {
+                        normal: {
+                            barBorderRadius: 20,
+                            // dataIndex 是当前柱子的索引号
+                            color: function (params) {
+                                return myColor[params.dataIndex];
+                            }
+                        }
+                    },
+                    data: province_confirm,
+                }
+            ]
+        };
+
+        //3.将组件赋值给实例化对象
+        myChart.setOption(option);
+
+        //4.设定图表自适应屏幕
+        window.addEventListener("resize", function () {
+            myChart.resize();
+        });
+    </script>
+
+</body>
+</html>
