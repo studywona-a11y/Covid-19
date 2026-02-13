@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+        <img id="img" src="" hidden="hidden">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+        <script src="js/macarons.js"></script>
+
+
+        <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom,'macarons');
+var app = {};
+
+var option;
+
+var ROOT_PATH = ''
+
+$.get(
+  ROOT_PATH + './Veins_Medical_Diagram_clip_art.svg',
+  function (svg) {
+    echarts.registerMap('organ_diagram', { svg: svg });
+    option = {
+      tooltip: {},
+      geo: {
+        left: 10,
+        right: '50%',
+        map: 'organ_diagram',
+        selectedMode: 'multiple',
+        emphasis: {
+          focus: 'self',
+          itemStyle: {
+            color: null
+          },
+          label: {
+            position: 'bottom',
+            distance: 0,
+            textBorderColor: '#fff',
+            textBorderWidth: 2
+          }
+        },
+        blur: {},
+        select: {
+          itemStyle: {
+            color: '#b50205'
+          },
+          label: {
+            show: false,
+            textBorderColor: '#fff',
+            textBorderWidth: 2
+          }
+        }
+      },
+      grid: {
+        left: '60%',
+        top: '20%',
+        bottom: '20%'
+      },
+      xAxis: { axisLabel: {
+            textStyle: {
+            fontSize:'15',
+            itemSize:''},}},
+      yAxis: {
+        data: [
+          '心脏',
+          'large-intestine',
+          'small-intestine',
+          'spleen',
+          'kidney',
+          'lung',
+          'liver'
+        ],
+       axisLabel: {
+        inside: false,
+        textStyle: {
+            color: '#000',
+            fontSize:'15',
+            itemSize:''
+
+        }
+        }
+
+      },
+      series: [
+        {
+          type: 'bar',
+          emphasis: {
+            focus: 'self'
+          },
+          data: [121, 321, 141, 52, 198, 289, 139]
+
+                }
+      ],
+        animation: false,
+        toolbox: {
+            show: true,  //show为显示工具栏
+            feature: { //feature里面放的是工具栏元素
+              dataZoom: {  // 控制图表的区域放大  需要鼠标拖拽
+                yAxisIndex: "none"  // yAxisIndex  代表横向放大
+                //xAxisIndex: "none" // xAxisIndex  代表纵向放大
+              },
+              dataView: { // dataView
+                readOnly: false  // readOnly为是否为不可编辑只读状态  true为只读   false为可编辑
+              },
+              magicType: { //magicType 为动态类型切换
+                type: ["line", "bar"]   //type为需要切换的类型集合
+              },
+              restore: {},  // restore为还原按钮
+              saveAsImage: {}  // saveAsImage下载图片
+            }
+          },
+    };
+    myChart.setOption(option);
+    window.onresize = function(){
+            myChart.resize();}
+    myChart.on('mouseover', { seriesIndex: 0 }, function (event) {
+      myChart.dispatchAction({
+        type: 'highlight',
+        geoIndex: 0,
+        name: event.name
+      });
+    });
+    myChart.on('mouseout', { seriesIndex: 0 }, function (event) {
+      myChart.dispatchAction({
+        type: 'downplay',
+        geoIndex: 0,
+        name: event.name
+      });
+    });
+  }
+);
+
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option,true);
+}
+
+var picBase64Info = myChart.getDataURL();
+document.getElementById("img").src = picBase64Info;
+        </script>
+    </body>
+</html>
+    
