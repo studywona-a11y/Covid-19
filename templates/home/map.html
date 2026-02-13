@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>中国新冠疫情实时数据地图</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+  <script src="{% static 'js/echarts.min.js' %}"></script>
+  <script src="{% static 'js/china.js' %}"></script>
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+
+
+
+  <link href="{% static 'css/home_style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+<script>  window.province_name={{ province_name|safe }}
+            window.province_totalnowConfirm={{ province_totalnowConfirm|safe }}
+
+</script>
+  <!-- ======= Header ======= -->
+   <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="https://baike.baidu.com/item/%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92%E8%82%BA%E7%82%8E/24282529"><h1><font face="宋体">COVID-19</font></h1></a></h1>        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li><a href="/">首页</a></li>
+          <li><a href="{% url 'patient' %}">新冠患者的前置条件</a></li>
+          <li><a href="{% url 'sym' %}">新冠患者特征</a></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= 首页 ======= -->
+  <section id="team" class="header">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>中国新冠疫情可视化地图</h2>
+          <p>现有确诊</p>
+        </div>
+
+          <!-- ======= 预览板块 ======= -->
+        <section class="counts section-bg">
+            <div class="container">
+          <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+          <div id="dom1" style="width: 98%;height:400px;"></div>
+            </div>
+        </section><!-- End Counts Section -->
+      </div>
+    </section><!-- 结束 首页 -->
+
+
+
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+   <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+   <script src="{% static 'vendor/jquery-sticky/jquery.sticky.js' %}"></script>
+   <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+   <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+   <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+   <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+   <script src="{% static 'vendor/aos/aos.js' %}"></script>
+   <script src="{% static 'js/canvas-nest.js' %}"></script>
+   <script src="{% static 'js/canvas-nest.js' %}"></script>
+  <!-- Template Main JS File -->
+  <script src="{% static 'js/home_main.js' %}"></script>
+
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('dom1'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+
+                left: 'center',
+                textStyle: {
+                    color: "#000",
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['中国新冠疫情实时数据地图'],
+            },
+            visualMap: {
+                type: 'piecewise',
+                pieces: [
+                    { min: 10000, max: 2000000, label: '确诊大于等于10000人', color: '#901a1a' },
+                    { min: 5000, max: 9999, label: '确诊5000-9999人', color: '#dd171a' },
+                    { min: 1000, max: 4999, label: '确诊1000-4999人', color: '#ff554b' },
+                    { min: 100, max: 999, label: '确诊100-999人', color: '#ff8d8d' },
+                    { min: 1, max: 99, label: '确诊1-99人', color: '#f5ef80' },
+                ],
+                color: ['#e03336', '#fd6f65', '#dee074'],
+                textStyle: {
+                    color: "#000",
+                },
+            },
+            roamController: {
+                show: true,
+                left: 'right',
+                mapTypeControl: {
+                    'china': true
+                }
+            },
+            series: [
+                {
+                    name: '现有确诊数',
+                    type: 'map',
+                    mapType: 'china',
+                    roam: false,
+                    label: {
+                        show: true,
+                        color: 'rgb(249, 249, 249)'
+                    },
+                     data:[]
+                }
+
+            ]
+        };
+
+
+
+        $.ajax({
+            url: "https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=statisGradeCityDetail,diseaseh5Shelf",
+            dataType: "json", //jsonp做跨域访问
+            success: function (res) {
+                var data = res.data;
+
+               $('#nowConfirm').text(data.diseaseh5Shelf.chinaTotal.nowConfirm);
+
+
+                var provinces = data.diseaseh5Shelf.areaTree[0].children;
+                for (var province of provinces) {
+                    option.series[0].data.push({
+                        'name': province.name,
+                        'value': province.total.nowConfirm
+                    });
+                }
+
+                myChart.setOption(option); //使用指定的配置项和数据显示图表
+                //4.屏幕跟着自适应
+                window.addEventListener("resize", function () {
+                    myChart.resize();
+                });
+            }
+        })
+    </script>
+
+</body>
+
+</html>
