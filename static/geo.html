@@ -1,0 +1,306 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=geo-organ&version=5.3.0
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+        <img id="img" src="" hidden="hidden">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+        <script src="js/macarons.js"></script>
+        <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/extension/dataTool.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use map
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/map/js/world.js"></script>
+        -->
+        <!-- Uncomment these two lines if you want to use bmap extension
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@{{version}}/dist/extension/bmap.min.js"></script>
+        -->
+
+<script>
+    window.heart={{ heart|safe }}
+    window.spleen={{ spleen|safe }}
+    window.kidney={{ kidney|safe }}
+    window.lung={{ lung|safe }}
+    window.liver={{ liver|safe }}
+    window.other={{ other|safe }}
+    window.feiyan={{ feiyan|safe }}
+    window.renshen={{ renshen|safe }}
+    window.tangniaobing={{ tangniaobing|safe }}
+    window.feiqizhong={{ feiqizhong|safe }}
+    window.xiaochuan={{ xiaochuan|safe }}
+    window.gaoxueya={{ gaoxueya|safe }}
+    window.xinxueguan={{ xinxueguan|safe }}
+    window.feipang={{ feipang|safe }}
+    window.shenshuaijie={{ shenshuaijie|safe }}
+    window.smoking={{ smoking|safe }}
+    window.contacts={{ contacts|safe }}
+    window.others={{ others|safe }}
+</script>
+        <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom,'macarons');
+var app = {};
+
+var option;
+
+var ROOT_PATH = 'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples'
+
+$.get(
+  ROOT_PATH + '/data/asset/geo/Veins_Medical_Diagram_clip_art.svg',
+  function (svg) {
+      echarts.registerMap('organ_diagram', {svg: svg});
+      option = {
+          tooltip: {},
+          geo: {
+              left: 10,
+              right: '50%',
+              map: 'organ_diagram',
+              selectedMode: 'multiple',
+              emphasis: {
+                  focus: 'self',
+                  itemStyle: {
+                      color: null
+                  },
+                  label: {
+                      position: 'bottom',
+                      distance: 0,
+                      textBorderColor: '#fff',
+                      textBorderWidth: 2
+                  }
+              },
+              blur: {},
+              select: {
+                  itemStyle: {
+                      color: '#b50205'
+                  },
+                  label: {
+                      show: false,
+                      textBorderColor: '#fff',
+                      textBorderWidth: 2
+                  }
+              }
+          },
+          grid: {
+              left: '60%',
+              top: '20%',
+              bottom: '20%'
+          },
+          xAxis: {
+              axisLabel: {
+                  textStyle: {
+                      fontSize: '15',
+                      itemSize: ''
+                  },
+              }
+          },
+          yAxis: {
+    data: [
+      'other',
+      'liver',
+      'lung',
+      'kidney',
+      'spleen',
+      'heart'
+  ],
+  axisLabel: {
+      inside: false,
+      textStyle: {
+          color: '#000',
+          fontSize: '15',
+          itemSize: ''
+
+      }
+  }
+
+          },
+          dataGroupId: '',
+          animationDurationUpdate: 500,
+          series: {
+              type: 'bar',
+              id: 'geo',
+              emphasis: {
+                  focus: 'self'
+              },
+              data: [
+                  {
+                      value: other,
+                      groupId: 'other'
+                  },
+                  {
+                      value: liver,
+                      groupId: 'liver'
+                  },
+                  {
+                      value: lung,
+                      groupId: 'lung'
+                  },
+                  {
+                      value: kidney,
+                      groupId: 'kidney'
+                  },
+                  {
+                      value: spleen,
+                      groupId: 'spleen'
+                  },
+                  {
+                      value: heart,
+                      groupId: 'heart'
+                  }
+              ],
+              universalTransition: {
+                  enabled: true,
+                  divideShape: 'clone'
+              }
+          },
+          animation: false,
+          toolbox: {
+              show: true,  //show为显示工具栏
+              feature: { //feature里面放的是工具栏元素
+                  dataZoom: {  // 控制图表的区域放大  需要鼠标拖拽
+                      yAxisIndex: "none"  // yAxisIndex  代表横向放大
+                      //xAxisIndex: "none" // xAxisIndex  代表纵向放大
+                  },
+                  dataView: { // dataView
+                      readOnly: false  // readOnly为是否为不可编辑只读状态  true为只读   false为可编辑
+                  },
+                  magicType: { //magicType 为动态类型切换
+                      type: ["line", "bar"]   //type为需要切换的类型集合
+                  },
+                  restore: {},  // restore为还原按钮
+                  saveAsImage: {}  // saveAsImage下载图片
+              }
+          },
+      };
+      const drilldownData = [
+          {
+              dataGroupId: 'other',
+              data: [
+                  ['妊娠', renshen],
+                  ['糖尿病', tangniaobing],
+                  ['哮喘', xiaochuan],
+                  ['其他', others],
+              ]
+          },
+          {
+              dataGroupId: 'liver',
+              data: [
+                  ['肥胖', feipang],
+              ]
+          },
+          {
+              dataGroupId: 'lung',
+              data: [
+                  ['肺炎', feiyan],
+                  ['肺气肿', feiqizhong],
+                  ['吸烟', smoking],
+              ]
+          },
+          {
+              dataGroupId: 'kidney',
+              data: [
+                  ['肾衰竭', shenshuaijie],
+              ]
+          },
+          {
+              dataGroupId: 'spleen',
+              data: [
+                  ['肥胖', feipang],
+              ]
+          },
+          {
+              dataGroupId: 'heart',
+              data: [
+                  ['高血压', gaoxueya],
+                  ['心血管', xinxueguan],
+              ]
+          }
+      ]
+      myChart.on('click', function (event) {
+          if (event.data) {
+              var subData = drilldownData.find(function (data) {
+                  return data.dataGroupId === event.data.groupId;
+              });
+              if (!subData) {
+                  return;
+              }
+              myChart.setOption({
+                  xAxis: {
+                      data: subData.data.map(function (item) {
+                          return item[0];
+                      })
+                  },
+                  series: {
+                      type: 'bar',
+                      id: 'geo',
+                      dataGroupId: subData.dataGroupId,
+                      data: subData.data.map(function (item) {
+                          return item[1];
+                      }),
+                      universalTransition: {
+                          enabled: true,
+                          divideShape: 'clone'
+                      }
+                  },
+                  graphic: [
+                      {
+                          type: 'text',
+                          left: 700,
+                          top: 20,
+                          style: {
+                              text: 'Back',
+                              fontSize: 18
+                          },
+                          onclick: function () {
+                              myChart.setOption(option);
+                          }
+                      }
+                  ]
+              });
+          }
+      });
+      myChart.setOption(option);
+      window.onresize = function () {
+          myChart.resize();
+      }
+      myChart.on('mouseover', {seriesIndex: 0}, function (event) {
+          myChart.dispatchAction({
+              type: 'highlight',
+              geoIndex: 0,
+              name: event.name
+          });
+      });
+      myChart.on('mouseout', {seriesIndex: 0}, function (event) {
+          myChart.dispatchAction({
+              type: 'downplay',
+              geoIndex: 0,
+              name: event.name
+          });
+      })
+
+  })
+
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option,true);
+}
+
+var picBase64Info = myChart.getDataURL();
+document.getElementById("img").src = picBase64Info;
+        </script>
+    </body>
+</html>
+    
